@@ -58,7 +58,7 @@ sudo systemctl restart nix-daemon
 Clone this repository to your home config directory:
 
 ```bash
-git clone <YOUR_REPO_URL> ~/.config/home-manager
+git clone git@github.com:hoangnguyenba/nix-home-manager-configs.git ~/.config/home-manager
 cd ~/.config/home-manager
 ```
 

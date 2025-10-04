@@ -19,6 +19,9 @@
     # Node.js 22
     nodejs_22
     
+    # Add more packages here
+    go
+
     # # Common development utilities
     # git
     # curl

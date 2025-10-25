@@ -12,6 +12,12 @@
 
   # The home.packages option allows you to install Nix packages into your environment
   home.packages = with pkgs; [
+
+    # aws cli
+    awscli2
+    aws-sam-cli
+    ssm-session-manager-plugin
+
     # PHP 8.4 and tools
     php84
     php84Packages.composer

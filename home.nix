@@ -1,6 +1,10 @@
-{ config, pkgs, ... }:
+ { config, pkgs, ... }:
 
 {
+
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
+
   # Home Manager needs a bit of information about you and the paths it should manage
   home.username = "hoang";  # Replace with your actual username
   home.homeDirectory = "/home/hoang";  # Replace with your home directory
@@ -17,6 +21,9 @@
     awscli2
     aws-sam-cli
     ssm-session-manager-plugin
+
+    # devops
+    terraform
 
     # PHP 8.4 and tools
     php84

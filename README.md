@@ -6,6 +6,8 @@ A flake-based Home Manager configuration for managing development environments o
 
 - **PHP 8.4** with Composer
 - **Node.js 22** with npm
+- **AWS CLI v2** with SAM CLI and SSM Session Manager Plugin
+- **Terraform** for infrastructure as code
 - Declarative package management
 - Reproducible development environment
 
@@ -13,10 +15,18 @@ A flake-based Home Manager configuration for managing development environments o
 
 ### Step 1: Install Nix Package Manager
 
-Install Nix with the daemon (multi-user installation):
+You have **two** options – pick the one that fits your workflow.
+
+#### **Option A – Multi-user (daemon, recommended for shared machines)**  
 
 ```bash
-sh <(curl -L https://nixos.org/nix/install) --daemon
+sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) --daemon
+```
+
+#### **Option B – Single-user (no daemon, simplest for personal laptops)**  
+
+```bash
+sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) --no-daemon
 ```
 
 After installation, restart your terminal or source the nix profile:

@@ -1,13 +1,17 @@
- { config, pkgs, ... }:
+{ config, pkgs, system, username, ... }:
 
+let
+  # Detect if running on macOS
+  isDarwin = builtins.match ".*-darwin" system != null;
+in
 {
-
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
   # Home Manager needs a bit of information about you and the paths it should manage
-  home.username = "hoang";  # Replace with your actual username
-  home.homeDirectory = "/home/hoang";  # Replace with your home directory
+  # Username is inherited from flake.nix
+  home.username = username;
+  home.homeDirectory = if isDarwin then "/Users/${username}" else "/home/${username}";
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -16,7 +20,6 @@
 
   # The home.packages option allows you to install Nix packages into your environment
   home.packages = with pkgs; [
-
     # aws cli
     awscli2
     aws-sam-cli

@@ -28,12 +28,16 @@ in
     # devops
     terraform
 
+    # sql
+    mysql84
+
     # PHP 8.4 and tools
     php84
     php84Packages.composer
     
     # Node.js 22
     nodejs_22
+    pnpm
 
     # python
     python312

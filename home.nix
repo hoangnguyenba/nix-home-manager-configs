@@ -36,11 +36,14 @@ in
     php84Packages.composer
     
     # Node.js 22
-    nodejs_22
+    nodejs_24
     pnpm
 
     # python
     python312
+    python312Packages.pip
+    # python312Packages.dbus
+    # python312Packages.dbus-python
     
     # Add more packages here
     go

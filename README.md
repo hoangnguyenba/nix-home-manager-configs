@@ -242,6 +242,31 @@ Now you can simply run:
 hms
 ```
 
+### All additional config
+
+bash
+```bash
+. /home/hoang/.nix-profile/etc/profile.d/nix.sh
+
+alias hms='home-manager switch --flake ~/.config/home-manager#linux'
+
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
+
+export PATH="$HOME/.npm-global/bin:$PATH"
+
+eval "$(zoxide init bash)"
+
+# Set up fzf key bindings and fuzzy completion
+eval "$(fzf --bash)"
+
+alias ls='eza --icons --group-directories-first'
+alias ll='eza --icons --group-directories-first -l'
+alias la='eza --icons --group-directories-first -la'
+alias lt='eza --icons --group-directories-first --tree'
+alias lsl='eza --icons --group-directories-first -lah'
+```
+
 ### Common Commands
 
 | Command | Description |

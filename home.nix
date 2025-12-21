@@ -49,6 +49,10 @@ in
     zoxide
     fzf
     eza
+
+    nerd-fonts.fira-code
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.meslo-lg
   ];
 
   # Home Manager can also manage your environment variables

@@ -1,5 +1,4 @@
-{ config, pkgs, system, username, ... }:
-
+{ config, pkgs, system, username, ghostty, ... }:
 let
   # Detect if running on macOS
   isDarwin = builtins.match ".*-darwin" system != null;
@@ -22,7 +21,7 @@ in
   home.packages = with pkgs; [
     # aws cli
     awscli2
-    aws-sam-cli
+    # aws-sam-cli
     ssm-session-manager-plugin
 
     # devops
@@ -34,19 +33,22 @@ in
     # PHP 8.4 and tools
     php84
     php84Packages.composer
-    
-    # Node.js 22
+
+    # Node.js 24
     nodejs_24
     pnpm
 
     # python
     python312
     python312Packages.pip
-    # python312Packages.dbus
-    # python312Packages.dbus-python
-    
+
     # Add more packages here
     go
+
+    # cli tools
+    zoxide
+    fzf
+    eza
   ];
 
   # Home Manager can also manage your environment variables

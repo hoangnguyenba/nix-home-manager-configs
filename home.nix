@@ -1,7 +1,9 @@
-{ config, pkgs, system, username, ghostty, ... }:
+{ config, pkgs, lib, system, username, ghostty, ... }:
 let
   # Detect if running on macOS
   isDarwin = builtins.match ".*-darwin" system != null;
+  # Detect if running on Linux
+  isLinux = builtins.match ".*-linux" system != null;
 in
 {
   # Allow unfree packages
@@ -18,54 +20,59 @@ in
   home.stateVersion = "25.05";
 
   # The home.packages option allows you to install Nix packages into your environment
-  home.packages = with pkgs; [
-    # aws cli
-    awscli2
-    # aws-sam-cli
-    ssm-session-manager-plugin
+  home.packages = 
+    let
+      commonPackages = with pkgs; [
+        # aws cli
+        awscli2
+        # aws-sam-cli
+        ssm-session-manager-plugin
 
-    # devops
-    terraform
+        # devops
+        terraform
 
-    # sql
-    mysql84
+        # sql
+        mysql84
 
-    # PHP 8.4 and tools
-    php84
-    php84Packages.composer
+        # PHP 8.4 and tools
+        php84
+        php84Packages.composer
 
-    # Node.js 24
-    nodejs_24
-    pnpm
+        # Node.js 24
+        nodejs_24
+        pnpm
 
-    # python
-    python312
-    python312Packages.pip
+        # python
+        python312
+        python312Packages.pip
 
-    # Add more packages here
-    go
+        # Add more packages here
+        go
 
-    # cli tools
-    zoxide
-    fzf
-    eza
-    lazygit
-    bat
+        # cli tools
+        zoxide
+        fzf
+        eza
+        lazygit
+        bat
 
-    dconf
+        nerd-fonts.fira-code
+        nerd-fonts.jetbrains-mono
+        nerd-fonts.meslo-lg
+      ];
 
-    wofi
-    # Clipboard manager that works with Pantheon/Mutter
-    copyq  # Works on both X11 and Wayland
-    wl-clipboard  # Keep this for CLI clipboard operations
+      linuxPackages = with pkgs; [
+        dconf
+        wofi
+        # Clipboard manager that works with Pantheon/Mutter
+        copyq  # Works on both X11 and Wayland
+        wl-clipboard  # Keep this for CLI clipboard operations
 
-    # Clipboard menu script - references external file
-    (pkgs.writeShellScriptBin "clipmenu-wofi" (builtins.readFile ./scripts/clipmenu-wofi.sh))
-
-    nerd-fonts.fira-code
-    nerd-fonts.jetbrains-mono
-    nerd-fonts.meslo-lg
-  ];
+        # Clipboard menu script - references external file
+        (pkgs.writeShellScriptBin "clipmenu-wofi" (builtins.readFile ./scripts/clipmenu-wofi.sh))
+      ];
+    in
+    commonPackages ++ (lib.optionals isLinux linuxPackages);
 
   # Home Manager can also manage your environment variables
   home.sessionVariables = {
@@ -74,11 +81,13 @@ in
     PHP_INI_SCAN_DIR = "$HOME/.config/php";
   };
 
-  # Wofi configuration - references external file
-  home.file.".config/wofi/style.css".source = ./config/wofi/style.css;
+  # Linux-specific configurations
+  home.file = lib.mkIf isLinux {
+    ".config/wofi/style.css".source = ./config/wofi/style.css;
+  };
 
   # Add after your home.file sections
-  dconf.settings = {
+  dconf.settings = lib.mkIf isLinux {
     "org/gnome/settings-daemon/plugins/media-keys" = {
       custom-keybindings = [
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"

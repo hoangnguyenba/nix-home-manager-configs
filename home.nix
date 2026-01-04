@@ -52,6 +52,16 @@ in
     lazygit
     bat
 
+    dconf
+
+    wofi
+    # Clipboard manager that works with Pantheon/Mutter
+    copyq  # Works on both X11 and Wayland
+    wl-clipboard  # Keep this for CLI clipboard operations
+
+    # Clipboard menu script - references external file
+    (pkgs.writeShellScriptBin "clipmenu-wofi" (builtins.readFile ./scripts/clipmenu-wofi.sh))
+
     nerd-fonts.fira-code
     nerd-fonts.jetbrains-mono
     nerd-fonts.meslo-lg
@@ -62,6 +72,24 @@ in
     # EDITOR = "vim";
     # PHP configuration
     PHP_INI_SCAN_DIR = "$HOME/.config/php";
+  };
+
+  # Wofi configuration - references external file
+  home.file.".config/wofi/style.css".source = ./config/wofi/style.css;
+
+  # Add after your home.file sections
+  dconf.settings = {
+    "org/gnome/settings-daemon/plugins/media-keys" = {
+      custom-keybindings = [
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
+      ];
+    };
+    
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
+      name = "Clipboard Manager";
+      command = "clipmenu-wofi";
+      binding = "<Super>v";
+    };
   };
 
   # Let Home Manager install and manage itself

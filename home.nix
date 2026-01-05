@@ -55,6 +55,7 @@ in
         eza
         lazygit
         bat
+        gh
 
         nerd-fonts.fira-code
         nerd-fonts.jetbrains-mono

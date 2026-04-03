@@ -38,6 +38,9 @@ in
       opcache
       pdo_mysql
       mbstring
+      filter
+      openssl
+      zlib
     ]))
     php84Packages.composer
 

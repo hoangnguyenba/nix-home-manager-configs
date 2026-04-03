@@ -31,7 +31,14 @@ in
     mysql84
 
     # PHP 8.4 and tools
-    php84
+    (php84.withExtensions ({ all, ... }: with all; [
+      grpc
+      protobuf 
+      
+      opcache
+      pdo_mysql
+      mbstring
+    ]))
     php84Packages.composer
 
     # Node.js 24

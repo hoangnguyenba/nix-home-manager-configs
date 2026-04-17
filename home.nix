@@ -41,6 +41,8 @@ in
       filter
       openssl
       zlib
+      sockets
+      tokenizer
     ]))
     php84Packages.composer
 
